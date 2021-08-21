@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sample_riverpod/provider/orders_provider.dart';
+import 'package:sample_riverpod/provider/library_provider.dart';
 import 'dart:math';
 
 void main() {
@@ -153,8 +153,8 @@ class MyHomePage extends HookWidget {
              ],
           ]
     */
-    final _orderProvider = useProvider(orderStateNotifierProvider);
-    final List<SelectedProductServices> _serviceList= context.read(orderStateNotifierProvider.notifier).getServices();
+    final _orderProvider = useProvider(libraryStateNotifierProvider);
+    final List<Users> _serviceList = context.read(libraryStateNotifierProvider.notifier).getServices();
     return Scaffold(
         appBar: AppBar(
           title: Text('test'),
@@ -164,9 +164,11 @@ class MyHomePage extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              if (_serviceList.indexWhere((s) => s.id == 1)<0)
+              if (_serviceList.indexWhere((s) => s.userId == 1) < 0)
                 GestureDetector(
-                  onTap: ()=>context.read(orderStateNotifierProvider.notifier).increment(productId: 1,serviceId: 1,serviceCost: 1),
+                  onTap: () => context
+                      .read(libraryStateNotifierProvider.notifier)
+                      .create(bookId: 1, userId: 1),
                   child: Container(
                       width: 200.0,
                       height: 50.0,
@@ -183,11 +185,11 @@ class MyHomePage extends HookWidget {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: ()=>context.read(orderStateNotifierProvider.notifier).clearAll(),
+                        onTap: () => context.read(libraryStateNotifierProvider.notifier).clearAll(),
                         child: Container(
                             width: 200.0,
                             height: 50.0,
-                            margin: EdgeInsets.only(bottom:30.0),
+                            margin: EdgeInsets.only(bottom: 30.0),
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(50.0),
@@ -199,7 +201,9 @@ class MyHomePage extends HookWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: ()=>context.read(orderStateNotifierProvider.notifier).decrement(productId: 1,serviceId: 1),
+                            onTap: () => context
+                                .read(libraryStateNotifierProvider.notifier)
+                                .decrement(productId: 1, serviceId: 1),
                             child: Container(
                                 width: 50.0,
                                 height: 50.0,
@@ -212,7 +216,9 @@ class MyHomePage extends HookWidget {
                           ),
                           Text('     ${_serviceList[0].count}     '),
                           GestureDetector(
-                            onTap: ()=>context.read(orderStateNotifierProvider.notifier).increment(productId: 1,serviceId: 1,serviceCost: 1),
+                            onTap: () => context
+                                .read(libraryStateNotifierProvider.notifier)
+                                .increment(bookId: 1, userId: 1),
                             child: Container(
                                 width: 50.0,
                                 height: 50.0,
