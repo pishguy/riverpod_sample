@@ -19,7 +19,7 @@ class LibraryNotifier extends StateNotifier<Library> {
       if(book.bookId == bookId){
         int userIndex = book.users.indexWhere((u) => u.userId == userId);
         if(userIndex>=0){
-          book.users[userIndex].count+1;
+          Users(userId,book.users[userIndex].count+1);
         }
       }
     }
