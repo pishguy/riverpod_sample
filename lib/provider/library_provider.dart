@@ -32,8 +32,23 @@ class LibraryNotifier extends StateNotifier<Library> {
       Books(bookId, [Users(userId, 1)])
     ]);
   }
+  void decrement({required int bookId, required int userId}) {
+    final newState = Library(state.title, [...state.books]);
+    for (final book in newState.books){
+      if(book.bookId == bookId){
+        int userIndex = book.users.indexWhere((u) => u.userId == userId);
+        if(userIndex>=0){
+          if(book.users[userIndex].count <=1){
+            book.users.clear();
+            book.users.addAll(book.users.where((user) => user.userId!=userId).toList());
+          }else {
+            book.users[userIndex] = Users(userId, book.users[userIndex].count - 1);
+          }
+        }
+      }
+    }
 
-  void decrement({required int productId, required int serviceId}) {
+    state = newState;
   }
 }
 
